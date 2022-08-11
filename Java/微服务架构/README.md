@@ -1,7 +1,7 @@
 <!--
  * @Author: MrDeng
  * @Date: 2022-08-11 14:31:05
- * @LastEditTime: 2022-08-11 16:09:34
+ * @LastEditTime: 2022-08-11 21:52:30
  * @LastEditors: dengjuming
  * @Description: 
  * @FilePath: /advanced-learning/Java/微服务架构/README.md
@@ -42,10 +42,11 @@
     - 远程服务：启用驻留在 IT 设备网络上的远程访问信息。
 
 三、网关整理
-    - Nacos
-    - spring cloud
+  - Nacos
+  - spring cloud
 
 四、Nacos 整理
+  - 注册中心 + 配置中心 = Nacos。
 
 五、spring cloud整理
 

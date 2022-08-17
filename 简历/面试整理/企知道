@@ -1,0 +1,49 @@
+<!--
+ * @Author: MrDeng
+ * @Date: 2022-08-17 20:17:28
+ * @LastEditTime: 2022-08-17 23:31:54
+ * @LastEditors: dengjuming
+ * @Description: 
+ * @FilePath: /advanced-learning/简历/面试整理/企知道
+-->
+一、企知道（大概需求）
+    1.熟悉多线程、数据结构和算法。
+    2.熟练使用RabbitMQ、SpringBoot、SpringCloud等等。
+    3.具备一定的SQL优化能力
+
+二、RabbitMQ整理
+    1.具体事情
+
+三、多线程
+    1.线程池
+        - 线程池类型
+        - 加Netty
+        - 加Java NIO
+    2.线程池问题优化
+        - 上下文切换严重：如何设置线程池大小
+        - redis - Key过期策略设置：rdm查看
+        - redis - 数据持久化方式：AOF等等
+    3.线程池基本组成
+        - 线程池管理器（ThreadPool）: 用于创建并管理线程池，包括创建线程池，销毁线程池，添加新任务
+        - 工作线程（workThread）：线程池中线程，在没有任务时出于等待状态，可以循环的执行任务；
+        - 任务接口（Task）：每个任务必须实现的接口，以供工作线程调度任务的执行，它主要规定了任务的人口，任务执行完成后的收尾工作，任务的执行状态等；
+        - 任务队列（TaskQueue）：用于存放没有处理的任务，提供一种缓存机制。
+
+    4.基本操作
+        - 创建线程池参数：线程池基本大小、最大大小、拒绝策略、线程工厂、拒绝策略、线程活动时间、线程活动时间单位
+        - 向线程池提交任务：
+          - excute():没有返回值
+          - submit()：返回一个future。
+    5.阻塞队列
+        - 基于数组的 先进先出ArrayBlockingQueue
+        - 基于链表的 有界 LinkedBlockingQueue
+        - 无界队列。 SynchronousQueue
+    6.Java提供的线程池
+        - newSingleThreadScheduledExecutor 周期性执行任务
+        - newSingleThreadExecutor 工作线程数为1的线程，工作被顺序执行
+        - newCachedThreadPool： 用来处理大量短时间工作任务的线程池
+        - newFixedThreadPool 指定线程数个数，任务数量超过线程池，进入等待
+
+四、算法复习
+
+    

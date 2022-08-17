@@ -1,10 +1,10 @@
 <!--
  * @Author: MrDeng
  * @Date: 2022-08-11 14:31:05
- * @LastEditTime: 2022-08-11 21:52:30
+ * @LastEditTime: 2022-08-12 10:03:40
  * @LastEditors: dengjuming
  * @Description: 
- * @FilePath: /advanced-learning/Java/微服务架构/README.md
+ * @FilePath: /advanced-learning/Java/微服务架构/README
 -->
 一、微服务架构问题
     1.java搭建微服务
@@ -47,7 +47,11 @@
 
 四、Nacos 整理
   - 注册中心 + 配置中心 = Nacos。
+  - 注册中心-具体流程：
+    - 一个更易于构建云原生应用的动态服务发现、配置管理和服务管理平台。
+  - Nacos面试
 
 五、spring cloud整理
 
 六、项目搭建项目
+

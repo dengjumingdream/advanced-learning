@@ -1,0 +1,47 @@
+'''
+Author: MrDeng
+Date: 2022-08-18 15:11:15
+LastEditTime: 2022-08-18 15:11:18
+LastEditors: dengjuming
+Description: 
+FilePath: /advanced-learning/Java/Java基础知识/线程
+'''
+1.设置参数 
+    核心线程数
+    最大线程数
+    线程等待时间
+    线程等待时间单位
+    用于保存任务的队列
+    创建线程的工厂类
+    线程池的饱和策略
+2.具体组成
+    ThreadPool（线程池管理器）: 用于管理线程池，例如：创建线程池、删除线程池和添加新任务
+    WorkThread（工作线程）: 线程池中的线程，在没有任务的时候出于等待状态，可以循环的执行任务
+    Task（任务接口）：每个任务必须实现的接口。
+    TaskQueue（任务队列）：用于存放没有处理的任务。
+    
+3.工作队列
+    SynchronousQueue同步移交队列：队列长度为0，来了直接移交
+    链表队列：无界队列，任务越来越多时，可能OOM，内存泄露
+    有界队列：队列长度受限，当队列满了就需要创建多余的线程来执行任务
+
+4.拒绝策略
+    AbortPolicy：中断抛出异常
+    Discard：默默抛弃
+    DiscardOldest：抛弃队列中最久的
+    CallerRunsPolicy：让提交了任务的线程去执行任务
+
+5.线程池的关闭
+    shutDownNow():强制中断所有任务，被中断的任务，会返回中断列表
+    shutDown():平滑中断，未执行完的执行完成，后边来的执行拒绝策略
+    isTerminated():
+
+6.提供的几种线程池
+    单线程池：长度为1，任务被顺序执行
+    定时任务线程池：周期性执行任务
+    newFixedThreadPool：指定线程个数，超过进入等待
+
+7.Callable有返回值，runable没有
+
+8.线程池问题优化
+    - 上下文切换严重：如何设置线程池大小

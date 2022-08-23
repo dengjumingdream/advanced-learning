@@ -1,0 +1,17 @@
+<!--
+ * @Author: MrDeng
+ * @Date: 2022-08-23 15:57:49
+ * @LastEditTime: 2022-08-23 15:58:33
+ * @LastEditors: dengjuming
+ * @Description: 
+ * @FilePath: /advanced-learning/集群/k8s
+-->
+一、k8s组成
+
+二、k8s搭建
+
+三、k8sIP如何分配
+    - 使用 CNI 插件固定IP
+    - IPAM 用来做IP地址分配
+    
+四、k8s部署应用

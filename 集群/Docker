@@ -1,0 +1,19 @@
+一、基本参数
+    ARG：构建参数，在将来运行容器时是不会存在的环境变量。但是docker history还是能查的，密码勿用。
+    WORKDIR：切换目录，这一操作是持久的，不需要每一个命名前都加上这个。
+
+二、docker获取宿主机IP
+    - 通过环境变量传入
+      - docker run -env HOST_IP=192.168.8.90
+      - 通过 $HOST_IP获取
+      - java 获取环境变量
+    - 运行docker时，绑定host，docker run -network host，通过ip route获取
+      - Docker Network Configuration 高级网络配置 ？？？
+        - docker运行之后，创建docker0网卡
+        - 网络拓扑图？？？
+
+三、docker容器创建方式
+    - docker run
+    - dockerfile 配置文件构建镜像
+    - docker-compose方式构建镜像
+    - 加（-d）后台运行容器

@@ -1,7 +1,7 @@
 <!--
  * @Author: MrDeng
  * @Date: 2022-08-17 20:17:28
- * @LastEditTime: 2022-08-17 23:31:54
+ * @LastEditTime: 2022-08-24 20:12:52
  * @LastEditors: dengjuming
  * @Description: 
  * @FilePath: /advanced-learning/简历/面试整理/企知道
@@ -45,5 +45,38 @@
         - newFixedThreadPool 指定线程数个数，任务数量超过线程池，进入等待
 
 四、算法复习
+
+
+
+五、一面复习
+ 1.IO框架
+    BIO：
+      同步阻塞
+    NIO：
+      同步非阻塞；
+      组成：
+        Buffer：存储数据
+        Channel：进行数据传输，面向缓冲区进行操作
+        Selector：选择器，多路复用器
+    AIO：
+      异步非阻塞
+    
+  2.内存模型
+    https://blog.csdn.net/ghost_Programmer/article/details/40891735
+
+  3.springboot
+  
+  4.netty
+    - 组成
+    - NioEventLoopGroup
+    - NioEventLoop：创建
+      - boosGroup
+      - workerGroup
+    - selector
+    - ChannelHandler
+  
+  5.微服务
+
+  6.线程池
 
     

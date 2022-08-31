@@ -1,0 +1,33 @@
+<!--
+ * @Author: MrDeng
+ * @Date: 2022-08-26 16:30:05
+ * @LastEditTime: 2022-08-31 11:56:05
+ * @LastEditors: dengjuming
+ * @Description: 
+ * @FilePath: /advanced-learning/中间件/Redis
+-->
+一、数据结构
+    1.String（字符串）
+      - 操作：Set key value ；get key
+    2.list（列表）
+      - 链表：插入和删除特别快
+      - 操作：LPush 和 RPush、 LRange和Lindex
+      - 链表没啥用，树有用
+
+    3.hash（字典）
+      - HashMap
+
+    4.set（集合）
+    5.zset（排序集合）
+    6.stream（流）
+
+二、redis
+    1.key过期淘汰策略
+    2.key失效机制
+    3.数据结构
+    4.数据持久化
+      - RDB：存储在单一文件中
+      - AOF：灵活的同步策略，能配置每秒同步、每次修改同步/不同步等等
+    5.集群部署 ***
+      - 哨兵
+      - 主从

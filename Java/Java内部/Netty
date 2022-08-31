@@ -1,0 +1,38 @@
+<!--
+ * @Author: MrDeng
+ * @Date: 2022-08-26 11:08:23
+ * @LastEditTime: 2022-08-26 11:32:26
+ * @LastEditors: dengjuming
+ * @Description: 
+ * @FilePath: /advanced-learning/Java/Java内部/Netty
+-->
+一、组成
+    - 缓冲区
+    - 通道
+    - 事件模型
+二、总结
+    - 提供了各种高效字节缓冲区
+    - 基于责任链模式的事件模型
+    - 快速开发高级组件
+三、代码应用
+    - 辅助类：ServerBootStrap
+    - 服务端工作线程组：workerNioEventLoopGroup
+    - 客户端连接线程组：boss
+    - ChannelHandler
+四、ChannelHandler类型
+    - 基于责任链处理事件
+五、中间件-Netty
+    1.特点：
+      - 高并发：基于NIO开发的网络框架
+      - 传输快：netty传输基于零拷贝的特性
+      - 封装好：封装好，提供特别多接口
+    2.零拷贝：
+      - Netty的接收和发送ByteBuffer采用DIRECT BUFFER，使用堆外内存进行socket读写。
+      - 堆外内存
+        - 优点：
+          - 减少了垃圾回收
+          - 加快了复制速度
+      - 堆内内存
+        - JVM管理的 -Xms , -Xmx 设置大小和最大值
+        - 堆内内存 = 新生代 + 老年代 + 持久代
+      - java nio的实现，了解到Netty零拷贝

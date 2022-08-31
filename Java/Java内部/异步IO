@@ -1,0 +1,34 @@
+<!--
+ * @Author: MrDeng
+ * @Date: 2022-08-26 11:08:43
+ * @LastEditTime: 2022-08-26 11:33:08
+ * @LastEditors: dengjuming
+ * @Description: 
+ * @FilePath: /advanced-learning/Java/Java内部/异步IO
+-->
+1.异步IO
+  - 概念：NIO：同步非阻塞IO
+  - 重要组成：
+    - 缓冲区：buffer
+    - 管道：channel
+  - 缓冲区（buffer）：
+    - 数组原型
+    - 数据类型：ByteBuffer、LongBuffer好多
+    - 核心方法：
+      - set
+      - get
+      - allocate：通过它获取缓冲区
+    - 核心属性：
+      - capacity：最大容量
+      - Limit：界限，后的不能进行读写
+      - position：位置，正在操作的数据位置
+      - Mark：标记，表示记录当前position的位置
+      - 0 <= mark <= position <= limit <= capacity
+  - 通道（Channel）
+    - 本地IO
+      - FileChannel
+    - 网络IO
+      - SocketChannel
+      - ServerSocketChannel
+    - 获取通道方式
+      - getChannel

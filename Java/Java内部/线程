@@ -45,3 +45,8 @@ FilePath: /advanced-learning/Java/Java基础知识/线程
 
 8.线程池问题优化
     - 上下文切换严重：如何设置线程池大小
+
+9.synchronized锁
+
+10.锁的升降级
+    无锁状态 -> 偏向锁 -> 轻量级锁 -> 重量级锁

@@ -1,7 +1,7 @@
 <!--
  * @Author: MrDeng
  * @Date: 2022-08-26 16:30:05
- * @LastEditTime: 2022-08-31 11:56:05
+ * @LastEditTime: 2022-09-01 09:53:36
  * @LastEditors: dengjuming
  * @Description: 
  * @FilePath: /advanced-learning/中间件/Redis
@@ -18,10 +18,26 @@
       - HashMap
 
     4.set（集合）
+      - HashSet
+      
     5.zset（排序集合）
+      - SortedSet和hashMap的结合体
+      - 跳跃表
+    
     6.stream（流）
 
-二、redis
+    总结：
+    - 数据结构深入
+      - 基本原理
+      - 应用场景
+      - 扩展
+
+二、单机、集群、分布式集群
+    - 应用场景
+    - 部署
+    - 具体问题
+
+三、redis
     1.key过期淘汰策略
     2.key失效机制
     3.数据结构
@@ -31,3 +47,4 @@
     5.集群部署 ***
       - 哨兵
       - 主从
+

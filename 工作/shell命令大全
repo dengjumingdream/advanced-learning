@@ -1,0 +1,286 @@
+******90压测
+    vim /etc/profile
+    export JMETER_HOME=/usr/local/jmeter/apache-jmeter-5.4.1/apache-jmeter-5.4.1
+    export CLASSPATH=$JMETER_HOME/lib/ext/ApacheJMeter_core.jar:$JMETER_HOME/lib/jorphan.jar:$JMETER_HOME/lib/logkit-2.0.jar:$CLASSPATH
+    export PATH=$JMETER_HOME/bin:$PATH:$HOME/bin
+    source /etc/profile
+    chmod  777
+    touch test.jtl
+    cd /usr/local/jmeter/apache-jmeter-5.4.1/warcells
+    /usr/local/jmeter/apache-jmeter-5.4.1/apache-jmeter-5.4.1/bin/jmeter -n -t /usr/local/jmeter/apache-jmeter-5.4.1/warcells/jmeter.jmx -l ./1.jtl
+    ./bin/jmeter -n -t /home/test_code/TestPlanImage.jmx  -l /home/test_result/test08131505.jtl
+
+    // 构建环境
+    tar zxvf rjoy-gamemaster-server.jar
+    go build xjar.go
+    ./xjar nohup java -jar rjoy-gamemaster-1.0.0.xjar > console.log &
+    tail -f console.log
+
+    // go环境安装
+    tar -C /usr/local -xzf go1.16.linux-amd64.tar.gz 
+    vim /etc/profile
+    export GOPATH=/opt/tankserver/go/home
+    export GOROOT=/usr/local/go
+    export PATH=$PATH:/usr/local/go/bin
+    export PATH=$PATH:$GOPATH:$GOROOT:/bin
+    source /etc/profile
+
+    // arthars
+    trace org.rgm.modules.log.service.impl.SaveLogServiceImpl saveLogInfoToReids
+    monitor -c 1 org.rgm.modules.log.service.impl.SaveLogServiceImpl saveLogInfoToReids
+    thread | grep BLOCKED
+    thread -b
+
+    // mysql
+    mysql -uroot -P3307 -h127.0.0.1
+    mysqldump -uroot -proot --all-databases >/tmp/all.sql
+
+
+    // redis
+    /usr/local/redis/redis-5.0.0/src/redis-server /usr/local/redis/redis-5.0.0/redis.conf&
+
+    // 查看 jedis连接数
+    netstat -an | grep 6379 | grep EST | wc -l
+
+    // jvm监听器 
+    nohup java -Djava.rmi.server.hostname=192.168.8.90 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar rjoy-gamemaster-1.0.0.jar >console.log &
+
+
+******102服务器
+    - warcells
+        ps -ef|grep warcells
+        nohup java -Djava.rmi.server.hostname=192.168.8.102 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar warcells-log-releas_1.jar >console.log &
+        nohup java -Djava.rmi.server.hostname=192.168.8.102 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=1099 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -jar warcells-log-change.jar >console.log &
+
+        nohup java -jar warcells-log-release_2.jar >console.log &
+        nohup java -jar warcells-log-0.0.1-SNAPSHOT.jar >console.log &
+        tail -f console.log
+
+        mysql -uroot -P3306 -h127.0.0.1
+        use warcells_log;
+        select * from log_save;
+        SELECT COUNT(*) FROM log_save;
+        delete FROM log_save;
+        
+        create database `rajoy-gm` default character set utf8 collate utf8_general_ci;
+
+    - arthas
+        cd /opt/tankserver/webapps/arthas
+        java -jar arthas-boot.jar 
+        trace warcells.service.controller.LogSaveController saveLog '#cost > 10'
+        trace warcells.service.task.SaveLogAsyc saveLogInfo '#cost > 10'
+        trace warcells.service.service.impl.SaveLogServiceImpl saveLogInfo
+        trace warcells.service.service.impl.SaveLogServiceImpl saveLogInfoToReids '#cost > 10'
+        tt -t warcells.service.controller.LogSaveController saveLog
+        tt -t warcells.service.service.impl.SaveLogServiceImpl saveLogInfoToReids '#cost > 10'
+
+
+
+    - redis
+        DBSIZE
+        select 4
+        flushall
+
+        HGETALL a_20210413:0
+        HGETALL a_20210413:1
+        HGETALL a_20210413:2
+
+        redis-server /usr/local/redis-5.0.0/etc/redis.conf&
+
+        redis-cli -h 127.0.0.1 -p 6379 -a 123456
+
+    - mysql
+        mysql -uroot -P3306 -h127.0.0.1 
+
+******本地
+    cp -f /Users/admin/Desktop/JeecgBoot/warcells-log/warcells-log/target/warcells-log-0.0.1-SNAPSHOT.jar /Users/admin/Desktop
+    
+    // redis
+    redis-server  /usr/local/redis/redis.conf&
+    redis-dump -u :123456@127.0.0.1:6379 > local.json
+
+    redis-dump -u :rayjoy@18.218.70.151:6379 > warcells.json
+    cat warcells.json | redis-load -u :123456@127.0.0.1:6379
+
+    zrevrange "save_log_key_20210608" 1 1 withscores
+
+    HSCAN test1 0 match "nam*" count 1000
+    KEYS "test*"
+
+    // 查看redis 信息
+    redis-cli -a 123456 -p 6379 info
+
+    // 修改redis 配置
+    config set maxmemory-policy allkeys-lru  设置最大内存淘汰策略：LRU算法淘汰
+    config set maxmemory 5000mb
+
+    // go 
+    xjar java --add-opens java.base/jdk.internal.loader=ALL-UNNAMED -jar rjoy-gamemaster-1.0.0.xjar&
+
+    一、nginx.conf路径
+    /usr/local/etc/nginx
+    配置信息：
+    端口：7892
+    location ^~ /rgm-boot {
+            proxy_pass      http://127.0.0.1:8081/rgm-boot/;
+        }
+    localhost:7892
+    
+    二、nginx启动
+        /usr/local/Cellar/nginx/1.21.0/bin/nginx -c /usr/local/etc/nginx/nginx.conf
+
+    // python
+    # 安装包
+    pip3 install pandas -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
+    pip3 install PyMySQL -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
+
+    # 本地包：发布、安装
+    # 发布
+    python3 setup.py bdist_egg
+    python3 setup.py install
+
+    python3
+    import sys
+    sys : 查看路径：/usr/local/lib/python2.7/dist-packages/mytest-0.1-py2.7.egg ，这个就是安装包
+
+    # 安装
+    import sys
+    添加：sys.path.append(包的绝对路径)
+
+    # 修改pip3源
+    pip3 config set global.index-url http://pypi.douban.com/simple/
+
+    # 安装虚拟环境 - pipenv
+    python3 -m pip install --upgrade pip -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
+    pip show pip
+    sudo pip3 install pipenv -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
+
+    sudo -H pip3 install -U pipenv -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
+
+    # skyWalking
+    cp -r /Users/admin/Desktop/JeecgBoot/jeecg-boot-master/rgm-boot/rgm-boot-module-system/target/rjoy-gamemaster-1.0.0.jar /Users/admin/Desktop/Moon_joy_project/skywalking/test-space/gm_project
+    cd /Users/admin/Desktop/Moon_joy_project/skywalking/test-space/gm_project
+    sh gm.sh
+    sh stop.sh
+
+    cp -r /Users/admin/Desktop/Moon_joy_project/skywalking/agent-project/skywalking-alarm-test/target/testalarm-1.0.0.jar /Users/admin/Desktop/Moon_joy_project/skywalking/test-space/alarm-test
+
+    # SkyWalking Agent 配置
+    export SW_AGENT_NAME=Alarm-test-application # 配置 Agent 名字。一般来说，我们直接使用 Spring Boot 项目的 `spring.application.name` 。
+    export SW_AGENT_COLLECTOR_BACKEND_SERVICES=127.0.0.1:11800 # 配置 Collector 地址。
+    export SW_AGENT_SPAN_LIMIT=2000 # 配置链路的最大 Span 数量。一般情况下，不需要配置，默认为 300 。主要考虑，有些新上 SkyWalking Agent 的项目，代码可能比较糟糕。
+    export JAVA_AGENT=-javaagent:/Users/admin/Desktop/Moon_joy_project/skywalking/new_version_project/skywalking-agent/skywalking-agent.jar # SkyWalking Agent jar 地址。
+
+    java -jar $JAVA_AGENT -jar testalarm-1.0.0.jar
+
+
+******130
+    ./xjar nohup java -jar rjoy-gamemaster-1.0.0.xjar > console.log &
+
+******docker命令
+    docker ps -a
+    docker rm <id>
+    docker images
+    docker rmi <id>
+
+    进行镜像映射
+    docker run --name gaoxi-user-1 -p 8082:8080 -v /usr/web/gaoxi-log:/opt/tomcat/gaoxi-log chaimm/tomcat:1.1
+
+    查看docker空间占用
+    docker system df -v
+
+    
+    
+
+******richMan：项目
+        ssh -p 10220 opsteam@47.89.187.70
+        scp -r -P 10220 opsteam@134.175.192.233:/opt/tankserver/game/webapps/gmsup/WEB-INF/lib /Users/admin/Downloads/spring-core-5.3.14.jar 
+        sudo su
+        cd /opt/gm/
+        tail -f console.log
+
+        mysql -uroot -P3306 -hrm-0xiwjh8c69wm2c21w.mysql.rds.aliyuncs.com -p
+        password: Qz6v%JKF&Btm
+        use rajoy-gm;
+        SELECT * FROM sys_user;
+
+
+*******warcells：项目
+    3.22.5.161   opsteam   10220
+
+    -- redis
+    cd /usr/local/redis
+    sudo su
+    ps -ef|grep redis
+    ./redis-server &
+     ./redis-server ../redis.conf&
+
+    redis-cli -h 3.22.5.161 -p 6379
+
+    -- GM
+    cd /data/gm/server/target
+    tail -f console.log
+    sudo su
+
+    -- TiDb查询
+        SELECT * FROM savelog_20210904 WHERE event_time >= '2021-09-03 10:00:00' AND event_time <= '2021-09-03 11:00:00' AND (`replace` = 'true' or `replace` = '') AND isNew = 'True'
+
+
+****** 106
+    - mongo
+        mongo
+        use psshare
+        db.auth("psroot", "tzin91q3")
+        db.user.update(
+        {username:"dengjuming"},
+            {$set:
+                {
+                    role:"superadmin"
+                }
+            }
+        )
+
+****** git管理命令
+    # 修改文件忽略
+    git rm -r --cached .
+    git add .
+    git commit -m 'update .gitignore'
+
+
+****** svn功能管理
+    # 服务器
+    192.168.8.213
+    root
+    xb*MMRe(*b
+
+    # 后端代码地址
+    http://svn.rjoy.com/repos/bigtank/server 
+
+    # gm平台地址
+    http://publish.rayjoy.com/repos/tank/tank_gm 
+
+    # svn账号密码 = ldap账号密码
+
+    # 客户端api地址
+    http://192.168.8.213/tank-version/public/index.php/admin/apidoc/apidoc
+
+    # 服务器管理
+    svn co http://svn.rjoy.com/repos/bigtank/server/tank-luascripts-trunk tank_gm
+    sh lua.sh mytest.lua
+
+    # 注意点
+    table 数据一定要进行copyTables，再操作
+    ptb:p 打印table信息
+    ptb:e 阻塞程序，打印信息
+
+
+****** ldap
+dengjuming
+bGg5y8M76
+
+juming.deng@rjoy.com
+dengjuming
+
+870392097@qq.com
+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
+
